@@ -16,19 +16,25 @@ export const PlayerScreen: FC<IProps> = (props) => {
       // only emit at 30fps
       if (Date.now() - lastEmission > 1000 / 30) {
         socket.emit("rotate", {
-          x: orientation.alpha,
-          y: orientation.beta,
-          z: orientation.gamma,
+          alpha: orientation.alpha,
+          beta: orientation.beta,
+          gamma: orientation.gamma,
         });
         lastEmission = Date.now();
       }
     };
 
+    const sendFlipRequest = () => {
+      socket.emit("flip");
+    };
+
     window.addEventListener("deviceorientation", sendRotation);
+    window.addEventListener("click", sendFlipRequest);
 
     return () => {
       socket.off("rotate");
       window.removeEventListener("deviceorientation", sendRotation);
+      window.removeEventListener("click", sendFlipRequest);
     };
   }, []);
 

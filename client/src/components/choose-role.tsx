@@ -7,6 +7,8 @@ interface IProps {
   onChange: (role: number) => void;
 }
 
+const names = ["Hoge Hoogte Piet", "Wegwijs Piet", "Coole Piet", "Muziek Piet"];
+
 export const ChooseRole: FC<IProps> = (props) => {
   const chooseRole = (role: number) => {
     if (role !== -1) {
@@ -25,7 +27,7 @@ export const ChooseRole: FC<IProps> = (props) => {
           style={{ backgroundColor: color }}
           onClick={() => chooseRole(i)}
         >
-          Hulp piet {i + 1}
+          {names[i]}
         </div>
       ))}
 

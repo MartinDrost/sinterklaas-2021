@@ -33,8 +33,8 @@ export class AppGateway {
   }
 
   @SubscribeMessage('rotate')
-  async identity(
-    @MessageBody() rotation: [x: number, y: number, z: number],
+  async rotatePlayer(
+    @MessageBody() rotation: { alpha: number; beta: number; gamma: number },
     @ConnectedSocket() client: Socket,
   ) {
     const player = this.players.findIndex((player) => player === client);
@@ -42,6 +42,16 @@ export class AppGateway {
 
     if (player !== -1) {
       this.server.emit('rotate', { player, rotation });
+    }
+  }
+
+  @SubscribeMessage('flip')
+  async flipPlayer(@ConnectedSocket() client: Socket) {
+    const player = this.players.findIndex((player) => player === client);
+    console.log(`Player ${player} flipped`);
+
+    if (player !== -1) {
+      this.server.emit('flip', { player });
     }
   }
 }

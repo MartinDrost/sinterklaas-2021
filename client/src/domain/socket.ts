@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { environment } from "./environment.constant";
+import { environment } from "./environment";
 
 export const socket = io(environment.REACT_APP_SOCKET_URL ?? "");
 socket.on("connect", () => {
