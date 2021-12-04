@@ -52,12 +52,22 @@ export const SpectatorScreen: FC = () => {
       );
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        setSceneIndex((index) => Math.max(0, index - 1));
+      } else if (e.key === "ArrowRight") {
+        setSceneIndex((index) => Math.min(index + 1, scenes.length - 1));
+      }
+    };
+
     socket.on("rotate", handleRotation);
     socket.on("flip", handleFlip);
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       socket.off("rotate", handleRotation);
       socket.off("flip", handleFlip);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -95,7 +105,7 @@ export const SpectatorScreen: FC = () => {
               setSceneState(scene.puzzleImage ? "puzzle" : "outro")
             }
           >
-            Ga verder
+            Verder
           </div>
         </div>
       )}
@@ -133,7 +143,7 @@ export const SpectatorScreen: FC = () => {
 
           {isPuzzleSolved && (
             <div className={styles.link} onClick={() => setSceneState("outro")}>
-              Ga verder
+              Verder
             </div>
           )}
         </div>
@@ -148,7 +158,7 @@ export const SpectatorScreen: FC = () => {
               className={styles.link}
               onClick={() => setSceneIndex(sceneIndex + 1)}
             >
-              Ga verder
+              Verder
             </div>
           )}
         </div>
@@ -168,10 +178,9 @@ const styles = {
   }),
 
   link: style({
-    marginTop: "1rem",
+    marginTop: 50,
     cursor: "pointer",
     color: "#0984e3",
-    textDecoration: "underline",
   }),
 
   puzzle: style({
