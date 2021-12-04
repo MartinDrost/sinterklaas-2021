@@ -135,8 +135,8 @@ export const SpectatorScreen: FC = () => {
                       isPuzzleSolved
                         ? 0
                         : cornerStates[i].flipped
-                        ? 360 - (cornerStates[i].axis + cornerStartAxis[i])
-                        : cornerStates[i].axis + cornerStartAxis[i]
+                        ? cornerStates[i].axis + cornerStartAxis[i]
+                        : 360 - (cornerStates[i].axis + cornerStartAxis[i])
                     }deg)`,
                   }}
                 />
