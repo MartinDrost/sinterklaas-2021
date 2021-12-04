@@ -109,10 +109,10 @@ export const SpectatorScreen: FC = () => {
                 className={styles.corner}
                 key={i}
                 style={{
-                  transform: `scale(${
+                  transform: `scaleX(${
                     (isPuzzleSolved ? 1 : 0.7) *
                     (!isPuzzleSolved && cornerStates[i].flipped ? -1 : 1)
-                  })`,
+                  }) scaleY(${isPuzzleSolved ? 1 : 0.7})`,
                 }}
               >
                 <div
