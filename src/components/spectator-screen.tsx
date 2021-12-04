@@ -134,7 +134,8 @@ export const SpectatorScreen: FC = () => {
                     transform: `rotate(${
                       isPuzzleSolved
                         ? 0
-                        : -(cornerStates[i].axis + cornerStartAxis[i])
+                        : (cornerStates[i].axis + cornerStartAxis[i]) *
+                          (cornerStates[i].flipped ? -1 : 1)
                     }deg)`,
                   }}
                 />
