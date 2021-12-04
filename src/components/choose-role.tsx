@@ -7,7 +7,12 @@ interface IProps {
   onChange: (role: number) => void;
 }
 
-const names = ["Hoge Hoogte Piet", "Wegwijs Piet", "Coole Piet", "Muziek Piet"];
+const names = [
+  "Slechte Rappiet (Jeroen)",
+  "Wegwijs Piet",
+  "Coole Piet",
+  "Muziek Piet",
+];
 
 export const ChooseRole: FC<IProps> = (props) => {
   const chooseRole = (role: number) => {

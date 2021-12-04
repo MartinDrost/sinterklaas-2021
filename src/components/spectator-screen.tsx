@@ -1,7 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import { style } from "typestyle";
+import { keyframes, style } from "typestyle";
 import { scenes } from "../domain/scenes";
 import { socket } from "../domain/socket";
+import arrowImg from "../resources/arrow-right.svg";
 import backgroundImg from "../resources/gift-pattern.png";
 
 interface ICornerState {
@@ -43,7 +44,6 @@ export const SpectatorScreen: FC = () => {
     };
 
     const handleFlip = (data: { player: number }) => {
-      console.log(data);
       setCornerStates((states) =>
         states.map((state, i) => ({
           ...state,
@@ -57,6 +57,8 @@ export const SpectatorScreen: FC = () => {
         setSceneIndex((index) => Math.max(0, index - 1));
       } else if (e.key === "ArrowRight") {
         setSceneIndex((index) => Math.min(index + 1, scenes.length - 1));
+      } else if (e.key === " " && sceneState === "puzzle") {
+        setIsPuzzleSolved(true);
       }
     };
 
@@ -69,7 +71,7 @@ export const SpectatorScreen: FC = () => {
       socket.off("flip", handleFlip);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [sceneState]);
 
   useEffect(() => {
     setSceneState("intro");
@@ -104,9 +106,7 @@ export const SpectatorScreen: FC = () => {
             onClick={() =>
               setSceneState(scene.puzzleImage ? "puzzle" : "outro")
             }
-          >
-            Verder
-          </div>
+          />
         </div>
       )}
 
@@ -144,9 +144,10 @@ export const SpectatorScreen: FC = () => {
             ))}
 
           {isPuzzleSolved && (
-            <div className={styles.link} onClick={() => setSceneState("outro")}>
-              Verder
-            </div>
+            <div
+              className={styles.link}
+              onClick={() => setSceneState("outro")}
+            />
           )}
         </div>
       )}
@@ -159,15 +160,18 @@ export const SpectatorScreen: FC = () => {
             <div
               className={styles.link}
               onClick={() => setSceneIndex(sceneIndex + 1)}
-            >
-              Verder
-            </div>
+            />
           )}
         </div>
       )}
     </div>
   );
 };
+
+const backgrounPositionAnimation = keyframes({
+  "0%": { backgroundPosition: "100% 0%" },
+  "100%": { backgroundPosition: "0% 100%" },
+});
 
 const styles = {
   container: style({
@@ -179,12 +183,30 @@ const styles = {
     alignItems: "center",
     backgroundImage: `url(${backgroundImg})`,
     textAlign: "center",
+    animation: `${backgrounPositionAnimation} 120s infinite linear`,
   }),
 
   link: style({
-    marginTop: 50,
+    opacity: 0.5,
+    margin: "50px auto 0 auto",
     cursor: "pointer",
-    color: "#0984e3",
+    backgroundImage: `url(${arrowImg})`,
+    height: 40,
+    width: 80,
+    border: "2px solid #0984e3",
+    borderRadius: 10,
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    transition: "opacity 0.2s",
+
+    $nest: {
+      "&:hover": {
+        opacity: 1,
+      },
+      "&:active": {
+        opacity: 0.5,
+      },
+    },
   }),
 
   puzzle: style({
