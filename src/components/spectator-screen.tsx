@@ -169,7 +169,9 @@ export const SpectatorScreen: FC = () => {
 
 const styles = {
   container: style({
-    height: "100vh",
+    boxSizing: "border-box",
+    padding: 20,
+    minHeight: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -185,12 +187,13 @@ const styles = {
 
   puzzle: style({
     width: 720,
-    height: 720,
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
   }),
   corner: style({
     width: 360,
     height: 360,
-    float: "left",
     transition: ".3s transform",
   }),
 
